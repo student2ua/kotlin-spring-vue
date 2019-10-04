@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Изучаем Vue.js</title>
+    <meta charset="utf-8"/>
+</head>
+<body>
+<div id="app">
+<!--    <facebook-loader color="blue"/>-->
+    <select v-model.lazy="selected">
+        <option disabled value="">Выберите один из вариантов</option>
+        <option v-for="post of posts" v-bind:value="post.id">
+            {{ post.title }}
+        </option>
+    </select>
+    <span>Выбрано: {{ selected }}</span>
+<!--
+    <ul v-if="posts && posts.length">
+        <li v-for="post of posts" :key="post.id">
+            <p><strong>{{post.title}}</strong></p>
+        </li>
+    </ul>-->
+
+    <ul v-if="errors && errors.length">
+        <li v-for="(index, error) of errors" :key="index">
+            {{error.message}}
+        </li>
+    </ul>
+</div>
+<script src="https://unpkg.com/vue"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js" type="module"></script>-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/vue-spinners-css"></script>
+
+<script>
+    const BASE_URL = 'https://jsonplaceholder.typicode.com';
+    // import {axios2} from 'axios';
+   var app = new Vue({
+        el: '#app',
+        data: () => ({
+            posts: [],
+            errors: [] ,
+            selected: null
+        }),
+        created() {
+            let self = this
+
+            axios.get(`${BASE_URL}/todos`)
+                .then(function (response){
+                    console.log(`GET: Here's the list of todos`,JSON.stringify(response.data, null, '\t'));
+                    self.posts = response.data
+                })
+                .catch(e => {
+                    self.errors.push(e)
+                })
+        }
+
+    });
+</script>
+</body>
+</html>

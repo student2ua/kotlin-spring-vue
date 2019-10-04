@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Изучаем Vue.js</title>
+    <meta charset="utf-8"/>
+</head>
+<body>
+<div id="app">
+     <span>https://stackoverflow.com/questions/45494106/dynamically-create-select-options-on-the-fly</span>
+    <select class="form-control" @change="handleChange">
+        <option v-for="selectValue in selectValues" :value="selectValue">{{ selectValue }}</option>
+    </select>
+
+    <select class="form-control secondary">
+        <option v-for="secondarySelectValue in secondarySelectValues" :value="secondarySelectValue">{{
+            secondarySelectValue }}
+        </option>
+    </select>
+
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/vue-spinners-css"></script>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            selectValues: ['Hello', 'world', 'etc'],
+            secondarySelectValues: [],
+        },
+        methods: {
+            handleChange: function (e) {
+                switch (e.target.value) {
+                    case 'Hello':
+                        this.secondarySelectValues = [];
+                        this.secondarySelectValues.push('1this', '1is', '1hello');
+                        break;
+                    case 'world':
+                        this.secondarySelectValues = [];
+                        this.secondarySelectValues.push('2this', '2is', '2world')
+                        break;
+                    case 'etc':
+                        this.secondarySelectValues = [];
+                        this.secondarySelectValues.push('3this', '3is', '3etc')
+                        break;
+                }
+            }
+        }
+
+    });
+</script>
+</body>
+</html>

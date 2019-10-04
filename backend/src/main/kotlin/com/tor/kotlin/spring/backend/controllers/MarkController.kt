@@ -1,0 +1,47 @@
+package com.tor.kotlin.spring.backend.controllers
+
+import com.tor.kotlin.spring.backend.repo.MarkRESTRepository
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.core.Authentication
+import org.springframework.web.bind.annotation.*
+
+/**
+ * User: tor
+ */
+@RestController
+@RequestMapping("/api/mark/rest/v199")
+class MarkController {
+    @Autowired
+    lateinit var repo: MarkRESTRepository
+
+    @GetMapping("/subjects")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @ResponseBody
+    fun getSubjects(authentication: Authentication): ResponseEntity<List<Pair<Int, String>>> {
+        return ResponseEntity.ok(repo.getSubjects(0))
+    }
+
+    @GetMapping("/subjects/{sid}/lessontypes")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @ResponseBody
+    fun getLessonTypes(authentication: Authentication, @PathVariable sid: Int): ResponseEntity<List<Pair<Int, String>>> {
+        return ResponseEntity.ok(repo.getLessonTyps(0, sid))
+    }
+
+    @GetMapping("/subjects/{sid}/lessontypes/{ltid}/psgs", produces = [MediaType.APPLICATION_JSON_VALUE])
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @ResponseBody
+    fun getPSGs(authentication: Authentication, @PathVariable sid: Int, @PathVariable ltid: Int): ResponseEntity<List<Pair<Int, String>>> {
+        return ResponseEntity.ok(repo.getPSGs(0, sid, ltid))
+    }
+
+    @GetMapping("/subjects/{sid}/lessontypes/{ltid}/psgs/{psgid}/handsontable", produces = [MediaType.APPLICATION_JSON_VALUE])
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @ResponseBody
+    fun getHandsontable(authentication: Authentication,  @PathVariable sid: Int, @PathVariable ltid: Int,@PathVariable psgid: Int): ResponseEntity<String> {
+        return ResponseEntity.ok(repo.getHandsontable(0,sid,ltid,psgid))
+    }
+}
