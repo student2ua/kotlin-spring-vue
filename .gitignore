@@ -1,2 +1,5 @@
 # Project exclude paths
 /backend/target/
+/.idea/
+/*.gz
+/*.log
