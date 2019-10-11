@@ -10,7 +10,7 @@
 
 <script>
     import {HotTable} from '@handsontable/vue';
-    import { AXIOS } from "../http-commons";
+    import {AXIOS} from "../http-commons";
 
     export default {
         name: "HandsonTablePage",
@@ -22,7 +22,7 @@
         methods: {
             loadUserContent() {
                 const header = {'Authorization': "Bearer " + this.$store.getters.getToken};
-                AXIOS.get("/mark/rest/v199/subjects/1/lessontypes/handsontable", { headers: header })
+                AXIOS.get("/mark/rest/v199/subjects/1/lessontypes/1/psg/1/handsontable", { headers: header })
                     .then(response => {
                         this.$data.dataTable = JSON.parse(response.data).tabledata;
                     })
