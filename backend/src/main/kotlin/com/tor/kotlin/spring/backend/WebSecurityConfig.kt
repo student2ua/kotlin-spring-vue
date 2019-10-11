@@ -44,6 +44,12 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         return MarkRESTRepositoryImpl()
     }
 
+    /*  @Throws(Exception::class)
+      override fun configure(authenticationManagerBuilder: AuthenticationManagerBuilder) {
+          authenticationManagerBuilder
+                  .inMemoryAuthentication()
+                  .withUser("admin").password(bCryptPasswordEncoder().encode("admin")).roles("ADMIN");
+      }*/
     @Throws(Exception::class)
     override fun configure(authenticationManagerBuilder: AuthenticationManagerBuilder) {
         authenticationManagerBuilder

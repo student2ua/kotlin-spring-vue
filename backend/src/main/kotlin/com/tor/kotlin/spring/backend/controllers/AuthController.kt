@@ -1,7 +1,9 @@
 package com.tor.kotlin.spring.backend.controllers
 
 import com.tor.kotlin.spring.backend.entity.User
-import com.tor.kotlin.spring.backend.jaas.*
+import com.tor.kotlin.spring.backend.jaas.JwtProvider
+import com.tor.kotlin.spring.backend.jaas.JwtResponse
+import com.tor.kotlin.spring.backend.jaas.ResponseMessage
 import com.tor.kotlin.spring.backend.jaas.model.LoginUser
 import com.tor.kotlin.spring.backend.jaas.model.NewUser
 import com.tor.kotlin.spring.backend.repo.RoleRepository
@@ -26,7 +28,7 @@ import javax.validation.Valid
 @RequestMapping("/api/auth")
 class AuthController() {
     @Autowired
-    lateinit var authenticationManager:  AuthenticationManager
+    lateinit var authenticationManager: AuthenticationManager
     @Autowired
     lateinit var userRepository: UsersRepository
     @Autowired
@@ -38,15 +40,15 @@ class AuthController() {
 
     @PostMapping("/signin")
     fun authenticateUser(@Valid @RequestBody loginRequest: LoginUser): ResponseEntity<*> {
-        logger.debug(loginRequest.username+"/"+loginRequest.password)
+        logger.debug(loginRequest.username + "/" + loginRequest.password)
         val userCandidate: Optional<User> = userRepository.findByUsername(loginRequest.username!!)
         if (userCandidate.isPresent) {
             val user: User = userCandidate.get()
-            logger.debug("user"+user!!.toString())
+            logger.debug("user" + user!!.toString())
             val authentication = authenticationManager.authenticate(UsernamePasswordAuthenticationToken(loginRequest.username, loginRequest.password))
             SecurityContextHolder.getContext().setAuthentication(authentication)
             val jwt: String = jwtProvider.generateJwtToken(user.username!!)
-            logger.debug( "jwt: "+jwt)
+            logger.debug("jwt: " + jwt)
             val authorities: List<GrantedAuthority> = user.roles!!
                     .stream()
                     .map({ role -> SimpleGrantedAuthority(role.name) })
@@ -91,6 +93,7 @@ class AuthController() {
 
     //todo fun existsByUsername(@Param("username") username: String): Boolean ??
     private fun usernameExists(username: String): Boolean = userRepository.findByUsername(username).isPresent
+
     companion object {
         private val logger = LoggerFactory.getLogger(AuthController::class.java)
     }
