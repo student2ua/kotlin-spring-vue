@@ -6,7 +6,7 @@ import SignIn from "@/components/SignIn";
 import SignUp from "@/components/SignUp";
 // import AdminPage from "@/components/AdminPage";
 import UserPage from "@/components/UserPage";
-// import HandsonTablePage from "@/components/testvue/HandsonTablePage";
+import HandsonTablePage from "@/components/testvue/HandsonTablePage";
 import selectvue from "@/components/SelectVue";
 // import demoAxis from "@/components/testvue/demoAxis";
 //import Greeting from "@/components/Greeting";
@@ -35,6 +35,11 @@ export default new Router({
       path: "/register",
       name: "SignUp",
       component: SignUp
+    },
+    {
+      path: "/handson",
+      name: "HandsonTablePage",
+      component:HandsonTablePage
     },
     {
       path: "/selectvue",

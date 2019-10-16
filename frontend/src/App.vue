@@ -19,6 +19,14 @@
         "
         >Demo</router-link
       >
+      <router-link
+        to="/handson"
+        class="nav-link text-light"
+        v-if="
+          this.$store.getters.isAuthenticated
+        "
+        >HandsonTable</router-link
+      >
      <!-- <router-link
         to="/register"
         class="nav-link text-light"
