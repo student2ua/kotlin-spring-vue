@@ -62,11 +62,11 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
+    <!--    <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -100,9 +100,9 @@
                     <mainClass>com.tor.kotlin.spring.backend.BackendApplicationKt</mainClass>
                     <environmentVariables>
                         <!--SPRING_DATASOURCE_URL>jdbc:postgresql://192.168.0.44:5432/acco2018</SPRING_DATASOURCE_URL-->
-                        <SPRING_DATASOURCE_URL>${POSTGRES_DATASOURCE_URL}</SPRING_DATASOURCE_URL>
-                        <SPRING_DATASOURCE_USERNAME>${POSTGRES_DATASOURCE_USERNAME}</SPRING_DATASOURCE_USERNAME>
-                        <SPRING_DATASOURCE_PASSWORD>${POSTGRES_DATASOURCE_PASSWORD}</SPRING_DATASOURCE_PASSWORD>
+<!--                        <SPRING_DATASOURCE_URL>${POSTGRES_DATASOURCE_URL}</SPRING_DATASOURCE_URL>-->
+<!--                        <SPRING_DATASOURCE_USERNAME>${POSTGRES_DATASOURCE_USERNAME}</SPRING_DATASOURCE_USERNAME>-->
+<!--                        <SPRING_DATASOURCE_PASSWORD>${POSTGRES_DATASOURCE_PASSWORD}</SPRING_DATASOURCE_PASSWORD>-->
                     </environmentVariables>
                 </configuration>
             </plugin>
