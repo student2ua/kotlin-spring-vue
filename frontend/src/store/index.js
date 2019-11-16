@@ -1,5 +1,6 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from "vue";
+import Vuex from "vuex";
+// import auth from "./modules/auth";
 
 Vue.use(Vuex);
 
@@ -8,16 +9,15 @@ const state = {
   role: localStorage.getItem('user-role') || '',
   username: localStorage.getItem('user-name') || '',
   authorities: localStorage.getItem('authorities') || '',
+  status:''
 };
 
 const getters = {
-  isAuthenticated: state => {
-    if (state.token != null && state.token != '') {
-      return true;
-    } else {
-      return false;
-    }
-  },
+  authStatus: state => state.status,
+  isAuthenticated: state => !!state.token
+    // {return state.token != null && state.token != '';}
+
+  ,
 
   isAdmin: state => {
     if (state.role === 'admin') {
@@ -69,6 +69,7 @@ const mutations = {
     state.role = '';
     state.username = '';
     state.authorities = [];
+    state.status = '';
     localStorage.removeItem('user-token');
     localStorage.removeItem('user-role');
     localStorage.removeItem('user-name');

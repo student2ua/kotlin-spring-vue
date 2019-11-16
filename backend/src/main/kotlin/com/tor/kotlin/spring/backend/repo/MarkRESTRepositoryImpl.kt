@@ -1,8 +1,15 @@
 package com.tor.kotlin.spring.backend.repo
 
+import com.tor.kotlin.spring.backend.jaas.model.SaveMarkDTO
+import org.slf4j.LoggerFactory
 import java.util.*
 
 class MarkRESTRepositoryImpl : MarkRESTRepository {
+    override fun setHandsontableMark(hid: Int, sid: Int, ltid: Int, psgid: Int, dto: SaveMarkDTO): Boolean {
+        logger.info("$hid, $sid, $ltid, $psgid, $dto")
+        return true;
+    }
+
     val pz = Pair(1, "Pz")
     val lecture = Pair(2, "Lecture")
     val lab = Pair(3, "Lab")
@@ -14,7 +21,8 @@ class MarkRESTRepositoryImpl : MarkRESTRepository {
     )
 
     override fun getHandsontable(humanId: Int, subjId: Int, lessonTypeId: Int, psgId: Int): String =
-            this::class.java.classLoader.getResource("handsontable.json").readText()
+//            this::class.java.classLoader.getResource("handsontable.json").readText()
+            this::class.java.classLoader.getResource("handsontableRealD.json").readText()
 
 
     override fun getSubjects(humanId: Int): List<Pair<Int, String>> = dataMap.keys.toList().sortedBy { it.second }
@@ -31,11 +39,15 @@ class MarkRESTRepositoryImpl : MarkRESTRepository {
         val griff = Pair(2, "Гриффиндор")
         val puf = Pair(3, "Пуффендуй")
         val kog = Pair(4, "Когтевран")
-        
+
         return when (Pair(subjId, lessonTypeId)) {
             Pair(1, 1) -> Arrays.asList(sliz, griff)
             Pair(2, 1), Pair(2, 2) -> Arrays.asList(sliz, puf, kog)
             else -> Arrays.asList(sliz, griff, puf, kog)
         }.sortedBy { it.second }
+    }
+
+    companion object {
+        private val logger = LoggerFactory.getLogger(MarkRESTRepositoryImpl::class.java)
     }
 }

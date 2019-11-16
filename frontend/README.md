@@ -36,4 +36,8 @@ npm install --save vue-router
 npm install --save axios
 npm install --save vuex
 npm install --save bootstrap bootstrap-vue
-```
+```  
+https://www.slideshare.net/MailRuGroup/api-vuejs-175897016
+https://www.youtube.com/watch?v=42GnGAa3654
+
+https://www.npmjs.com/package/http-vue-loader

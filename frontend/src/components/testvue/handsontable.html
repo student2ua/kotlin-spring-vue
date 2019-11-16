@@ -169,7 +169,7 @@ function getMarkData1() {
         dataType: 'json',
         type: 'GET',
         success: function(res){
-            $("#example6grid").handsontable("loadData", res.data);
+            container.handsontable("loadData", res.data);
         }
     })
     return dataObject;

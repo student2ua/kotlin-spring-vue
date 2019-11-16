@@ -1,4 +1,4 @@
-CREATE Schema "FORTEST" ;
+CREATE SCHEMA IF NOT EXISTS "FORTEST" ;
 --if not exists "fortest"
 --CREATE Schema if not exists "universityaudit";
 
@@ -40,6 +40,8 @@ CREATE TABLE fortest.users_roles
     PRIMARY KEY (id)
 );
 
+
+
 ALTER TABLE fortest.users_roles
     ADD CONSTRAINT fortest.users_roles_users_fk FOREIGN KEY (user_id)
         REFERENCES fortest.users (id)
@@ -51,3 +53,5 @@ ALTER TABLE fortest.users_roles
         REFERENCES fortest.roles (id)
         ON UPDATE CASCADE
         ON DELETE CASCADE;
+
+-- DROP TABLE IF EXISTS SPRING_SESSION;

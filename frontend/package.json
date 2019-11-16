@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@handsontable/formulajs": "^2.0.1",
     "@handsontable/vue": "^4.1.0",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",

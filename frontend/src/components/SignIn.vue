@@ -16,25 +16,41 @@
             @dismiss-count-down="countDownChanged"
           >
             {{ alertMessage }}
+            <b-progress
+                    variant="warning"
+                    :max="dismissSecs"
+                    :value="dismissCountDown"
+                    height="4px"
+            ></b-progress>
           </b-alert>
         </div>
         <div>
-          <b-form-input type="text" placeholder="Username" v-model="username"  :state="usernameState" aria-describedby="input-live-help input-live-feedback"
-            trim  required
+          <b-form-input
+            type="text"
+            placeholder="Username"
+            v-model="username"
+            :state="usernameState"
+            aria-describedby="input-live-help input-live-feedback"
+            trim
+            required
           />
           <div class="mt-2"></div>
 
           <b-form-input
             type="password"
             placeholder="Password"
-            v-model="password" required   maxlength="16"
+            v-model="password"
+            required
+            maxlength="16"
           /><!--:state="passwordState"-->
           <div class="mt-2"></div>
         </div>
 
-        <b-button v-on:click="login" variant="primary" :disabled="isDisabled">Login</b-button>
+        <b-button v-on:click="login" variant="primary" :disabled="isDisabled"
+          >Login</b-button
+        >
 
-       <!-- <hr class="my-4" />
+        <!-- <hr class="my-4" />
 
         <b-button variant="link">Forget password?</b-button>-->
       </b-card>
@@ -43,9 +59,10 @@
 </template>
 
 <script>
-import { AXIOS } from "./http-commons";
+    // import {AUTH_REQUEST} from "../store/actions/auth";
+    import {AXIOS} from "./http-commons";
 
-export default {
+    export default {
   name: "SignIn",
   data() {
     return {
@@ -53,7 +70,7 @@ export default {
       password: "",
       dismissSecs: 5,
       dismissCountDown: 0,
-      alertMessage: "Request error"
+      alertMessage: ""
     };
   },
   methods: {
@@ -64,11 +81,11 @@ export default {
           response => {
             console.log(response);
             this.$store.dispatch("login", {
-              'token': response.data.accessToken,
-              'roles': response.data.authorities,
-              'username': response.data.username
+              token: response.data.accessToken,
+              roles: response.data.authorities,
+              username: response.data.username
             });
-            this.$router.push('/home');
+            this.$router.push("/home");
           },
           error => {
             this.$data.alertMessage =
@@ -76,11 +93,13 @@ export default {
                 ? error.response.data.message
                 : "Request error. Please, report this error website owners";
             console.log(error);
+
           }
         )
 
         .catch(e => {
           console.log(e);
+          console.log(e.response.data.error);
           this.showAlert();
         });
     },
@@ -93,14 +112,14 @@ export default {
   },
   computed: {
     usernameState() {
-      return this.username.length > 2 ? true : false
+      return this.username.length > 2 ? true : false;
     },
     passwordState() {
-      return this.password.length > 4 ? true : false
+      return this.password.length > 4 ? true : false;
     },
     isDisabled() {
       return !this.username || !this.password;
-      }
+    }
   }
 };
 </script>

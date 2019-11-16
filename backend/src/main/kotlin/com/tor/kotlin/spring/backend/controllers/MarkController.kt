@@ -1,5 +1,6 @@
 package com.tor.kotlin.spring.backend.controllers
 
+import com.tor.kotlin.spring.backend.jaas.model.SaveMarkDTO
 import com.tor.kotlin.spring.backend.repo.MarkRESTRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 /**
  * User: tor
@@ -41,7 +43,18 @@ class MarkController {
     @GetMapping("/subjects/{sid}/lessontypes/{ltid}/psgs/{psgid}/handsontable", produces = [MediaType.APPLICATION_JSON_VALUE])
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseBody
-    fun getHandsontable(authentication: Authentication,  @PathVariable sid: Int, @PathVariable ltid: Int,@PathVariable psgid: Int): ResponseEntity<String> {
-        return ResponseEntity.ok(repo.getHandsontable(0,sid,ltid,psgid))
+    fun getHandsontable(authentication: Authentication, @PathVariable sid: Int, @PathVariable ltid: Int, @PathVariable psgid: Int): ResponseEntity<String> {
+        return ResponseEntity.ok(repo.getHandsontable(0, sid, ltid, psgid))
+    }
+
+    @PostMapping("/subjects/{sid}/lessontypes/{ltid}/psgs/{psgid}/handsontable", produces = [MediaType.APPLICATION_JSON_VALUE])
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @ResponseBody
+    fun setHandsontable(authentication: Authentication, @PathVariable sid: Int, @PathVariable ltid: Int, @PathVariable psgid: Int, @Valid @RequestBody dto: SaveMarkDTO): ResponseEntity<*> {
+        return if (repo.setHandsontableMark(0, sid, ltid, psgid, dto)) {
+            ResponseEntity.ok("ok")
+        } else {
+            ResponseEntity.badRequest().body("Error")
+        }
     }
 }
