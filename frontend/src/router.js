@@ -12,9 +12,9 @@ import selectvue from "@/components/SelectVue";
 //import Greeting from "@/components/Greeting";
 
 Vue.use(Router);
-
-export default new Router({
+const router = new Router({
   mode: "history",
+  base:"/openAPI/",
   routes: [
     {
       path: "/",
@@ -39,7 +39,7 @@ export default new Router({
     {
       path: "/handson",
       name: "HandsonTablePage",
-      component:HandsonTablePage
+      component: HandsonTablePage
     },
     {
       path: "/selectvue",
@@ -55,6 +55,13 @@ export default new Router({
       path: "/hello-world",
       name: "HelloWorld",
       component: HelloWorld
-    }
+    },
+    // catch all redirect
+    { path: "*", redirect: "/" }
   ]
 });
+/*router.beforeEach((to, from, next) => {
+  if (!this.$store.getters.isAuthenticated) next("/login");
+  else next();
+});*/
+export default router;

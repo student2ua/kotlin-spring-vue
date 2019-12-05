@@ -1,28 +1,30 @@
 <template>
   <div div="HandsonTablePage">
     <loading v-if="loading" />
-    <!--       :settings="settings"         -->
+    <!--       :settings="settings"    rowHeaders="true"     -->
     <hot-table
+      class="hot handsontable htRowHeaders htColumnHeaders"
       ref="hottable"
       licenseKey="non-commercial-and-evaluation"
       :data="dataTable"
       selectionMode="single"
       colHeaders="true"
-      rowHeaders="true"
     />
   </div>
 </template>
 
 <script>
-    import {HotTable} from "@handsontable/vue";
-    import {AXIOS} from "../http-commons";
-    // import { mapGetters } from "vuex";
+  import {HotTable} from "@handsontable/vue";
+  import {AXIOS} from "../http-commons";
+  // import loading from "../lib/loading";
+// import { mapGetters } from "vuex";
 
 export default {
   name: "HandsonTablePage",
   data() {
     return {
-      col: new Map(),
+      loading: false,
+      col: { "01": "test" },
       dataTable: [],
       nestedHeaders: [],
       columns: [],
@@ -58,7 +60,7 @@ export default {
         startRows: 5,
         startCols: 5,
         // nestedHeaders: [],
-        // formulas: true,
+        formulas: true,
         observeChanges: true,
         afterLoadData: initialLoad => {
           console.log("afterLoadData:", initialLoad);
@@ -83,34 +85,42 @@ export default {
   methods: {
     loadUserContent() {
       let self = this;
-
+      const xah_obj_to_map = obj => {
+        const mp = new Map();
+        Object.keys(obj).forEach(k => {
+          mp.set(k, obj[k]);
+        });
+        return mp;
+      };
+      self.loading = true;
       // self.$store.status = "loading";
       console.time("loadUserContent");
       const header = {
         Authorization: "Bearer " + this.$store.getters.getToken
       };
+      const subjID = 9549;
+      const lt = 1;
+      const psgId = 42301;
       AXIOS.get(
-        "/mark/rest/v199/subjects/1/lessontypes/1/psgs/1/handsontable",
+              `/mark/rest/v199/subjects/${subjID}/lessontypes/${lt}/psgs/${psgId}/handsontable`,
         { headers: header }
       )
         .then(response => {
           console.timeEnd("loadUserContent");
           // self.$store.status = 'success';
-          console.log(
-            "col=" + JSON.stringify(response.data.col, null, "\t")
-          );
+          console.log("col=" + JSON.stringify(response.data.col, null, "\t"));
           self.columns = response.data.columns;
           self.nestedHeaders = response.data.nestedHeaders;
           self.dataTable = response.data.tabledata;
           self.rows = response.data.rows;
-          self.col = response.data.col;
+          self.col = xah_obj_to_map(response.data.col);
 
           self.$refs.hottable.hotInstance.updateSettings({
             columns: self.columns,
             nestedHeaders: self.nestedHeaders,
             data: self.dataTable,
             maxRows: 20,
-            // formulas: true
+            formulas: true,
             observeChanges: true,
             fixedColumnsLeft: 1,
             // });
@@ -126,6 +136,9 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
+        })
+        .finally(() => {
+          self.loading = false;
         });
     },
     saveCell(row, prop, oldValue, newValue) {
@@ -135,12 +148,14 @@ export default {
       const header = {
         Authorization: "Bearer " + this.$store.getters.getToken
       };
-      console.log(self.col);
-      console.log(prop);
-      console.log(self.col.get(prop));
-      prop=self.col.get(prop);
+
+      prop = self.col.get(prop);
+      row = self.rows[row];
+      const subjID = 9549;
+      const lt = 1;
+      const psgId = 42301;
       AXIOS.post(
-        "/mark/rest/v199/subjects/1/lessontypes/1/psgs/1/handsontable",
+        `/mark/rest/v199/subjects/${subjID}/lessontypes/${lt}/psgs/${psgId}/handsontable`,
         { row, prop, oldValue, newValue },
         { headers: header }
       ).catch(function(error) {
@@ -164,6 +179,8 @@ export default {
 };
 </script>
 
-<style
-  src="../../../node_modules/handsontable/dist/handsontable.full.css"
-></style>
+<style scoped>
+  /*handsontable.full.min.css*/
+  @import '~handsontable/dist/handsontable.full.css';
+/*@import url("../../../node_modules/handsontable/dist/handsontable.full.css");*/
+</style>

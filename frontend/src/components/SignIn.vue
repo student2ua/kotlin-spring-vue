@@ -17,10 +17,10 @@
           >
             {{ alertMessage }}
             <b-progress
-                    variant="warning"
-                    :max="dismissSecs"
-                    :value="dismissCountDown"
-                    height="4px"
+              variant="warning"
+              :max="dismissSecs"
+              :value="dismissCountDown"
+              height="4px"
             ></b-progress>
           </b-alert>
         </div>
@@ -75,25 +75,28 @@
   },
   methods: {
     login() {
-      AXIOS.post(`/auth/signin`, {'username': this.$data.username,'password': this.$data.password
+        let self=this;
+      AXIOS.post(`/auth/signin`, {
+        email: this.$data.username,
+        password: this.$data.password
       })
         .then(
           response => {
-            console.log(response);
+            // console.log(response);
             this.$store.dispatch("login", {
               token: response.data.accessToken,
               roles: response.data.authorities,
               username: response.data.username
             });
-            this.$router.push("/home");
+            this.$router.push("/selectvue");
           },
           error => {
-            this.$data.alertMessage =
+              self.alertMessage =
               error.response.data.message.length < 150
                 ? error.response.data.message
                 : "Request error. Please, report this error website owners";
             console.log(error);
-
+            this.showAlert();
           }
         )
 

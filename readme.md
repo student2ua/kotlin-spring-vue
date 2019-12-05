@@ -9,6 +9,8 @@
 - https://www.baeldung.com/spring-security-oauth-jwt
 - https://github.com/callicoder/spring-boot-react-oauth2-social-login-demo
 - https://www.programcreek.com/java-api-examples/?code=Erudika/para/para-master/para-server/src/main/java/com/erudika/para/security/SecurityUtils.java
+- https://github.com/Snailclimb/spring-security-jwt-guide
+- [route-проверка входа](https://webdevblog.ru/ispolzovanie-middleware-vo-vue/)
 ---
 - http://localhost:8080/api/persons
 - http://localhost:8080/api/greeting

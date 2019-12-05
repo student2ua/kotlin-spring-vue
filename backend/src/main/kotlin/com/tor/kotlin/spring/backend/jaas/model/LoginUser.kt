@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.io.Serializable
 
 class LoginUser : Serializable {
-    @JsonProperty("username")
+    @JsonProperty("email")
     var username: String? = null
 
     @JsonProperty("password")

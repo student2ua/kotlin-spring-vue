@@ -2,6 +2,7 @@ package com.tor.kotlin.spring.backend.jaas
 
 import com.tor.kotlin.spring.backend.repo.UsersRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -15,7 +16,7 @@ class UserDetailsServiceImpl : UserDetailsService {
     @Autowired
     lateinit var userRepository: UsersRepository
 
-    @Throws(UsernameNotFoundException::class)
+    @Throws(UsernameNotFoundException::class)      @Cacheable(cacheNames=["user"])
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userRepository.findByUsername(username).get()
                 ?: throw UsernameNotFoundException("User '$username' not found")

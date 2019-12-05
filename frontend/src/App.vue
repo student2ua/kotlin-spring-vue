@@ -15,7 +15,7 @@
         to="/selectvue"
         class="nav-link text-light"
         v-if="
-          this.$store.getters.isAuthenticated && this.$store.getters.isAdmin
+          this.$store.getters.isAuthenticated
         "
         >Demo</router-link
       >
