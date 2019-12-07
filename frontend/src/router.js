@@ -7,7 +7,9 @@ import SignUp from "@/components/SignUp";
 // import AdminPage from "@/components/AdminPage";
 import UserPage from "@/components/UserPage";
 import HandsonTablePage from "@/components/testvue/HandsonTablePage";
+import HandsonTablePageSet from "./components/testvue/HandsonTablePageSet";
 import selectvue from "@/components/SelectVue";
+import selectvue2 from "@/components/SelectVue2";
 // import demoAxis from "@/components/testvue/demoAxis";
 //import Greeting from "@/components/Greeting";
 
@@ -40,6 +42,10 @@ const router = new Router({
       path: "/handson",
       name: "HandsonTablePage",
       component: HandsonTablePage
+    }, {
+      path: "/handsonset",
+      name: "HandsonTablePageSet",
+      component: HandsonTablePageSet
     },
     {
       path: "/selectvue",

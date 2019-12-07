@@ -27,6 +27,14 @@
         "
         >HandsonTable</router-link
       >
+      <router-link
+        to="/handsonset"
+        class="nav-link text-light"
+        v-if="
+          this.$store.getters.isAuthenticated
+        "
+        >HandsonTableSet</router-link
+      >
      <!-- <router-link
         to="/register"
         class="nav-link text-light"
