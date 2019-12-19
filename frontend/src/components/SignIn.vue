@@ -42,7 +42,9 @@
             v-model="password"
             required
             maxlength="16"
-          /><!--:state="passwordState"-->
+            @keydown.enter.native="login"
+          />
+          <!--:state="passwordState"-->
           <div class="mt-2"></div>
         </div>
 
@@ -74,6 +76,15 @@
     };
   },
   methods: {
+    /*      login: function () {
+          const {username, password} = this
+          this.$store.dispatch(AUTH_REQUEST, {
+              username,
+              password
+          }).then(() => {
+              this.$router.push("/home")
+          })
+  }*/
     login() {
         let self=this;
       AXIOS.post(`/auth/signin`, {
@@ -88,7 +99,7 @@
               roles: response.data.authorities,
               username: response.data.username
             });
-            this.$router.push("/selectvue");
+            this.$router.push("/markj");
           },
           error => {
               self.alertMessage =
