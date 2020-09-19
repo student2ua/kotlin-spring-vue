@@ -3,3 +3,10 @@
 /.idea/
 /*.gz
 /*.log
+/backend/*.log
+/backend/*.gz
+/backend/src/main/resources/public/static/css/
+/backend/src/main/resources/public/static/img/
+/backend/src/main/resources/public/static/js/
+/backend/data/*
+/data/*
