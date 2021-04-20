@@ -1,3 +1,7 @@
+#### see 
+- https://qna.habr.com/q/339651
+- https://webpack.js.org/guides/code-splitting/
+
 # frontend
 
 ## Project setup
