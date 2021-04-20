@@ -8,6 +8,13 @@ import com.tor.kotlin.spring.backend.jaas.model.LoginUser
 import com.tor.kotlin.spring.backend.jaas.model.NewUser
 import com.tor.kotlin.spring.backend.repo.RoleRepository
 import com.tor.kotlin.spring.backend.repo.UsersRepository
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -26,6 +33,8 @@ import javax.validation.Valid
 @CrossOrigin(origins = ["*"], maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
+// @API(value = "/api/auth", description = "Rest API for authentication operations", tags = arrayOf("Auth API"))
+@Tag(name = "Auth API")
 class AuthController() {
     @Autowired
     lateinit var authenticationManager: AuthenticationManager
@@ -38,6 +47,16 @@ class AuthController() {
     @Autowired
     lateinit var jwtProvider: JwtProvider
 
+    @Parameter(required = true)
+//    @ApiOperation(value = "authenticate", response = JwtResponse::class)
+    @Operation(summary = "authenticate", description = "logIn")
+    @ApiResponses(value = arrayOf(
+        ApiResponse(responseCode = "200", description = "authenticate",
+                content =arrayOf(Content(mediaType = "application/json",
+                        schema = Schema(implementation = JwtResponse::class)))
+                ),
+        ApiResponse(responseCode = "400", description = "User not found", content = [Content()])
+    ))
     @PostMapping("/signin")
     fun authenticateUser(@Valid @RequestBody loginRequest: LoginUser): ResponseEntity<*> {
         logger.debug(loginRequest.username + "/" + loginRequest.password)
