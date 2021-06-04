@@ -4,7 +4,9 @@
       <template #header>Mark</template>
 
       <template slot="lead">
-        This is the demo web-application written in Kotlin using Spring Boot and Vue.js for frontend
+        Це тестовий додаток для проставлення оцінок до журналу викладача.
+        Додавати у "Обране" саме цю сторінку.
+        Увага! Внесення оцінок з 01.06.2021 припинено до початку нового семестру.
       </template>
 
       <hr class="my-4" />
