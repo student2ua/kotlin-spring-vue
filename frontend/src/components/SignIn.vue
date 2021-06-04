@@ -86,7 +86,7 @@
           })
   }*/
     login() {
-        let self=this;
+      let self = this;
       AXIOS.post(`/auth/signin`, {
         email: this.$data.username,
         password: this.$data.password
@@ -102,18 +102,29 @@
             this.$router.push("/markj");
           },
           error => {
-              self.alertMessage =
-              error.response.data.message.length < 150
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            self.alertMessage =
+              /*error.response.data.message.length < 150
                 ? error.response.data.message
-                : "Request error. Please, report this error website owners";
+                :*/ "Request error. Please, report this error website owners";
             console.log(error);
+            if(error.response.status===404) self.alertMessage = "404 not found \n сервер не может найти данные согласно запросу";
             this.showAlert();
           }
         )
 
         .catch(e => {
-          console.log(e);
-          console.log(e.response.data.error);
+          console.log("catch "+e);
+          if (e.response){
+            // Request made and server responded
+            console.log(e.response.data);
+            console.log(e.response.status);
+            console.log(e.response.headers);
+          } else if(e.request){
+            console.log(e.request);
+          }
           this.showAlert();
         });
     },

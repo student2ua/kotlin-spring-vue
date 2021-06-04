@@ -1,46 +1,24 @@
 <template>
   <div id="app">
     <b-navbar style="width: 100%" type="dark" variant="dark">
-      <b-navbar-brand id="nav-brand" href="#">Сайт Mark ХНЕУ ім. С. Кузнеця</b-navbar-brand>
+      <b-navbar-brand id="nav-brand" href="#"
+        >Сайт Mark ХНЕУ ім. С. Кузнеця</b-navbar-brand
+      >
+      <notifications group="foo" position="bottom right"></notifications>
       <router-link to="/">
-        <img src="./assets/img/logo_logo.png" height="30" width="30" alt="ХНЕУ ім. С. Кузнеця"/>
+        <img
+          src="./assets/img/logo_logo128.gif"
+          height="30"
+          width="30"
+          alt="ХНЕУ ім. С. Кузнеця"
+        />
       </router-link>
       <router-link
-        to="/user"
+        to="/markj"
         class="nav-link text-light"
         v-if="this.$store.getters.isAuthenticated"
-        >User</router-link
+        >Оцінки</router-link
       >
-      <router-link
-        to="/selectvue"
-        class="nav-link text-light"
-        v-if="
-          this.$store.getters.isAuthenticated
-        "
-        >Demo</router-link
-      >
-      <router-link
-        to="/handson"
-        class="nav-link text-light"
-        v-if="
-          this.$store.getters.isAuthenticated
-        "
-        >HandsonTable</router-link
-      >
-      <router-link
-        to="/handsonset"
-        class="nav-link text-light"
-        v-if="
-          this.$store.getters.isAuthenticated
-        "
-        >HandsonTableSet</router-link
-      >
-     <!-- <router-link
-        to="/register"
-        class="nav-link text-light"
-        v-if="!this.$store.getters.isAuthenticated"
-        >Register</router-link
-      >-->
       <router-link
         to="/login"
         class="nav-link text-light"
@@ -60,6 +38,8 @@
 </template>
 
 <script>
+// import {AXIOS} from "./components/http-commons";
+
 export default {
   name: "app",
   methods: {
@@ -68,6 +48,19 @@ export default {
       this.$router.push("/");
     }
   }
+  /* see main js
+ created: function () {
+    AXIOS.interceptors.response.use(undefined, function (err) {
+      return new Promise(function (resolve, reject) {
+        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+          // if you ever get an unauthorized, logout the user
+          this.logout();
+          // you can also redirect to /login if needed !
+        }
+        throw err;
+      });
+    });
+  }*/
 };
 </script>
 

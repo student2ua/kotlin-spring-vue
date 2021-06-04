@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 // import auth from "./modules/auth";
-
+Vue.config.devtools = process.env.NODE_ENV === "development";
 Vue.use(Vuex);
 
 const state = {
@@ -91,3 +91,9 @@ export const store = new Vuex.Store({
   mutations,
   actions
 });
+// export default new Vuex.Store({
+/*  export const store = new Vuex.Store({
+  modules: {
+    auth
+  }
+});*/

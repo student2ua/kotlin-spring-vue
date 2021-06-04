@@ -1,22 +1,13 @@
 import Vue from "vue";
 import Router from "vue-router";
-import HelloWorld from "@/components/HelloWorld";
 import Home from "@/components/Home";
 import SignIn from "@/components/SignIn";
-import SignUp from "@/components/SignUp";
-// import AdminPage from "@/components/AdminPage";
-import UserPage from "@/components/UserPage";
-import HandsonTablePage from "@/components/testvue/HandsonTablePage";
-import HandsonTablePageSet from "./components/testvue/HandsonTablePageSet";
-import selectvue from "@/components/SelectVue";
 import selectvue2 from "@/components/SelectVue2";
-// import demoAxis from "@/components/testvue/demoAxis";
-//import Greeting from "@/components/Greeting";
 
 Vue.use(Router);
 const router = new Router({
   mode: "history",
-  base:"/openAPI/",
+  base: "/openAPI/",
   routes: [
     {
       path: "/",
@@ -34,33 +25,9 @@ const router = new Router({
       component: SignIn
     },
     {
-      path: "/register",
-      name: "SignUp",
-      component: SignUp
-    },
-    {
-      path: "/handson",
-      name: "HandsonTablePage",
-      component: HandsonTablePage
-    }, {
-      path: "/handsonset",
-      name: "HandsonTablePageSet",
-      component: HandsonTablePageSet
-    },
-    {
-      path: "/selectvue",
-      name: "selectvue",
-      component: selectvue
-    },
-    {
-      path: "/user",
-      name: "UserPage",
-      component: UserPage
-    },
-    {
-      path: "/hello-world",
-      name: "HelloWorld",
-      component: HelloWorld
+      path: "/markj",
+      name: "selectvue2",
+      component: selectvue2
     },
     // catch all redirect
     { path: "*", redirect: "/" }

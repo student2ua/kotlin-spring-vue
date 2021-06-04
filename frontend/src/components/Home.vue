@@ -1,9 +1,7 @@
 <template>
-  <div div="home">
+  <div>
     <b-jumbotron>
-      <template slot="header">
-       Mark
-      </template>
+      <template #header>Mark</template>
 
       <template slot="lead">
         This is the demo web-application written in Kotlin using Spring Boot and Vue.js for frontend
@@ -23,9 +21,9 @@
 </template>
 
 <script>
-export default {
-  name: 'Home'
-}
+  export default {
+  name: "Home"
+};
 </script>
 
 <style></style>
