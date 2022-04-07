@@ -38,16 +38,29 @@ npm install --save vuex
 npm install --save bootstrap bootstrap-vue
 ```   
 ## Links
-- [Используем axios вместе с Vue.js](https://medium.com/devschacht/используем-axios-вместе-с-vue-js-3bc45464c460)
 - [Организация работы с API на Vue.js Slide](https://www.slideshare.net/MailRuGroup/api-vuejs-175897016)
 - [Организация работы с API на Vue.js Youtube](https://www.youtube.com/watch?v=42GnGAa3654)
 - [http-vue-loader](https://www.npmjs.com/package/http-vue-loader)
 - [PurgeCSS-vue.js](https://purgecss.com/guides/vue.html#use-the-vue-cli-plugin)
-### text info
+- [управлять заголовками и мета-тегами в vuejs head, meta, title](https://qna.habr.com/q/490912)
+- [route-проверка входа](https://webdevblog.ru/ispolzovanie-middleware-vo-vue/)
+- [Toast bootstrap-vue](https://bootstrap-vue.org/docs/components/toast)
+- [handsontable 7.4.2](https://handsontable.com/docs/7.4.2/frameworks-wrapper-for-vue-vuex-example.html)
+### axios
+- [Используем axios вместе с Vue.js](https://medium.com/devschacht/используем-axios-вместе-с-vue-js-3bc45464c460)
+- [Axios interceptor to refresh JWT token after expiration](https://blog.liplex.de/axios-interceptor-to-refresh-jwt-token-after-expiration/)
+- [see interceptor](https://github.com/yangzongzhuan/RuoYi-Vue/blob/master/ruoyi-ui/src/utils/request.js)
+## to do
+- [s1](https://github.com/rieckpil/testing-spring-boot-applications-masterclass/blob/master/src/frontend/public/index.html)
 
+### text info
+- [awesome-vue](https://github.com/vuejs/awesome-vue#table)
+- [Проектирование архитектуры хранилища Vuex для больших приложений на Vue.js](https://habr.com/ru/company/otus/blog/506754/)
+- [Улучшение производительности vue приложения](https://habr.com/ru/post/543298/)
 #### headers
+- [securityheaders - mark](https://https://www.npmjs.com/package/http-vue-loader)
 - [HTTP-заголовки для ответственного разработчика](https://habr.com/ru/company/mailru/blog/450816/)
-- [Сервис проверки HTTP-заголовков сервера](https://habr.com/ru/post/504220/)
+- [Сервис проверки HTTP-заголовков сервера](https://habr.com/ru/post/504220/) [проверить](securityheaders.com/?q=https%3A%2F%2Fmark.hneu.edu.ua%2FopenAPI%2F%23&followRedirects=on)
 
 ##### Strict-Transport-Security
 Этот заголовок говорит браузеру, что вы не хотите использовать HTTP-запросы, и тогда он автоматически применит те же запросы к такому же источнику с защищенным соединением. Если вы попытаетесь открыть такой же URL через HTTP, браузер снова будет использовать HTTPS и перенаправит пользователя.
