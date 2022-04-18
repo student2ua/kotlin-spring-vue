@@ -28,6 +28,7 @@ import javax.validation.Valid
 @CrossOrigin(origins = ["*"], maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
+@Api(value = "/api/auth", description = "Rest API for authentication operations", tags = arrayOf("Auth API"))
 class AuthController() {
     @Autowired
     lateinit var authenticationManager: AuthenticationManager
@@ -40,6 +41,12 @@ class AuthController() {
     @Autowired
     lateinit var jwtProvider: JwtProvider
 
+    @ApiParam(required = true)
+    @ApiOperation(value = "authenticate", response = JwtResponse::class)
+    @ApiResponses(value = arrayOf(
+        ApiResponse(code = 200, message = "authenticate", response = JwtResponse::class),
+        ApiResponse(code = 400, message = "User not found")
+    ))
     @PostMapping("/signin")
     fun authenticateUser(@Valid @RequestBody loginRequest: LoginUser): ResponseEntity<*> {
         logger.debug(loginRequest.username + "/" + loginRequest.password)

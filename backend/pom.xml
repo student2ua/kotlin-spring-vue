@@ -22,6 +22,8 @@
         <rest-assured.version>3.3.0</rest-assured.version>
         <start-class>com.tor.kotlin.spring.backend.BackendApplicationKt</start-class>
         <postgresql.version>42.2.5</postgresql.version>
+        <swagger.version>2.7.0</swagger.version>
+<!--        <swagger.version>2.9.2</swagger.version>-->
     </properties>
 
     <dependencies>
@@ -75,6 +77,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
 
         <dependency>

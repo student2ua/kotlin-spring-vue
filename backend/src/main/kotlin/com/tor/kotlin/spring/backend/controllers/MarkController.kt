@@ -1,7 +1,11 @@
 package com.tor.kotlin.spring.backend.controllers
 
+import com.tor.kotlin.spring.backend.SwaggerConfig.Companion.BEARER_API_KEY
 import com.tor.kotlin.spring.backend.jaas.model.SaveMarkDTO
 import com.tor.kotlin.spring.backend.repo.MarkRESTRepository
+import io.swagger.annotations.Api
+import io.swagger.annotations.ApiOperation
+import io.swagger.annotations.Authorization
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -15,9 +19,12 @@ import javax.validation.Valid
  */
 @RestController
 @RequestMapping("/api/mark/rest/v199")
+@Api(value = "/api/mark/rest/v199", description = "Rest API for Mark View", tags = arrayOf("Mark API"))
 class MarkController {
     @Autowired
     lateinit var repo: MarkRESTRepository
+
+    @ApiOperation(value = "get subject`s", authorizations = arrayOf( Authorization(value = BEARER_API_KEY)) )
 
     @GetMapping("/subjects")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
