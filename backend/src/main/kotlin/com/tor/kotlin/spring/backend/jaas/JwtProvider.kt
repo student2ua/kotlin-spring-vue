@@ -13,9 +13,9 @@ public class JwtProvider {
 
     /*  @Autowired
       lateinit var usersRepository: UsersRepository*/
-    @Value("\${assm.app.jwtSecret}")
+    @Value("\${tor.app.jwtSecret}")
     lateinit var jwtSecret: String
-    @Value("\${assm.app.jwtExpiration}")
+    @Value("\${tor.app.jwtExpiration}")
     var jwtExpiration: Int? = 0
 
     fun generateJwtToken(username: String): String {
