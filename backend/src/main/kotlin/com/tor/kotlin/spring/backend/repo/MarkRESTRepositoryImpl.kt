@@ -15,18 +15,16 @@ class MarkRESTRepositoryImpl : MarkRESTRepository {
     val lab = Pair(3, "Lab")
 
     var dataMap: Map<Pair<Int, String>, List<Pair<Int, String>>> = mapOf(
-            (Pair(1, "Хвостопадство") to Arrays.asList(pz)),
-            (Pair(2, "Хвосторубство") to Arrays.asList(lecture, pz)),
-            (Pair(3, "Зельеварение") to Arrays.asList(lecture, lab, pz))
+            (Pair(1, "Хвостопадство") to listOf(pz)),
+            (Pair(2, "Хвосторубство") to listOf(lecture, pz)),
+            (Pair(3, "Зельеварение") to listOf(lecture, lab, pz))
     )
 
     override fun getHandsontable(humanId: Int, subjId: Int, lessonTypeId: Int, psgId: Int): String =
-//            this::class.java.classLoader.getResource("handsontable.json").readText()
-            this::class.java.classLoader.getResource("handsontableRealD.json").readText()
+            this::class.java.classLoader.getResource("handsontable.json").readText()
 
 
     override fun getSubjects(humanId: Int): List<Pair<Int, String>> = dataMap.keys.toList().sortedBy { it.second }
-//            Arrays.asList(Pair(1, "SubjectTest"))
 
     override fun getLessonTyps(humanId: Int, subjId: Int): List<Pair<Int, String>> = dataMap.entries
             .filter { it.key.first == subjId }

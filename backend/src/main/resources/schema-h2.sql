@@ -43,13 +43,13 @@ CREATE TABLE fortest.users_roles
 
 
 ALTER TABLE fortest.users_roles
-    ADD CONSTRAINT fortest.users_roles_users_fk FOREIGN KEY (user_id)
+    ADD CONSTRAINT users_roles_users_fk FOREIGN KEY (user_id)
         REFERENCES fortest.users (id)
         ON UPDATE CASCADE
         ON DELETE CASCADE;
 
 ALTER TABLE fortest.users_roles
-    ADD CONSTRAINT fortest.users_roles_roles_fk FOREIGN KEY (role_id)
+    ADD CONSTRAINT users_roles_roles_fk FOREIGN KEY (role_id)
         REFERENCES fortest.roles (id)
         ON UPDATE CASCADE
         ON DELETE CASCADE;

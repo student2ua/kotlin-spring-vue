@@ -11,15 +11,15 @@ data class User(
         @Column(name = "username")
         var username: String? = null,
         @Column(name = "first_name")
-        val firstName: String? = null,
+        var firstName: String? = null,
         @Column(name = "last_name")
-        val lastName: String? = null,
+        var lastName: String? = null,
         @Column(name = "email")
-        val email: String? = null,
+        var email: String? = null,
         @Column(name = "password")
-        val password: String? = null,
+        var password: String? = null,
         @Column(name = "enabled")
-        val enabled:Boolean=false,
+        var enabled:Boolean=false,
         @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "users_roles", schema = "fortest",
                 joinColumns = [JoinColumn(name = "user_id",referencedColumnName ="id" )],

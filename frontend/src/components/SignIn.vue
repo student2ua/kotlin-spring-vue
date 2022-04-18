@@ -110,19 +110,21 @@
                 ? error.response.data.message
                 :*/ "Request error. Please, report this error website owners";
             console.log(error);
-            if(error.response.status===404) self.alertMessage = "404 not found \n сервер не может найти данные согласно запросу";
+            if (error.response.status === 404)
+              self.alertMessage =
+                "404 not found \n сервер не може знайти дані згідно з запитом";
             this.showAlert();
           }
         )
 
         .catch(e => {
-          console.log("catch "+e);
-          if (e.response){
+          console.log("catch " + e);
+          if (e.response) {
             // Request made and server responded
             console.log(e.response.data);
             console.log(e.response.status);
             console.log(e.response.headers);
-          } else if(e.request){
+          } else if (e.request) {
             console.log(e.request);
           }
           this.showAlert();
