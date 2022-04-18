@@ -22,7 +22,7 @@
 - http://localhost:8080/api/greeting
 - http://localhost:8080/openAPI/swagger-ui.html
 - http://localhost:8080/openAPI/v2/api-docs
-- /actuator
+- http://localhost:8080/openAPI/actuator
 ### todo
  - refresh JWT token or not :)
  - @see `sample: habr-oas-3.0`
