@@ -8,12 +8,14 @@ import com.tor.kotlin.spring.backend.jaas.model.LoginUser
 import com.tor.kotlin.spring.backend.jaas.model.NewUser
 import com.tor.kotlin.spring.backend.repo.RoleRepository
 import com.tor.kotlin.spring.backend.repo.UsersRepository
+import io.swagger.annotations.*
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
@@ -83,6 +85,27 @@ class AuthController() {
             return ResponseEntity(ResponseMessage("User registred - ok"), HttpStatus.OK)
         } else {
             return ResponseEntity(ResponseMessage("User alredy exists"), HttpStatus.BAD_REQUEST)
+        }
+    }
+    @PostMapping("/refresh")
+    fun refreshToken(authentication: Authentication): ResponseEntity<*> {
+
+        val userCandidate: Optional<User> = userRepository.findByUsername(authentication.name)
+        if (userCandidate.isPresent) {
+            val user: User = userCandidate.get()
+            logger.debug("user" + user!!.toString())
+//            val authentication = authenticationManager.authenticate(UsernamePasswordAuthenticationToken(loginRequest.username, loginRequest.password))
+//            SecurityContextHolder.getContext().setAuthentication(authentication)
+            val jwt: String = jwtProvider.generateJwtToken(user.username!!)
+            logger.debug("jwt: " + jwt)
+            val authorities: List<GrantedAuthority> = user.roles!!
+                    .stream()
+                    .map({ role -> SimpleGrantedAuthority(role.name) })
+                    .collect(Collectors.toList<GrantedAuthority>())
+            logger.debug(authentication.authorities.toString())
+            return ResponseEntity.ok(JwtResponse(jwt, user.username, authorities))
+        } else {
+            return ResponseEntity(ResponseMessage("User not found!"), HttpStatus.BAD_REQUEST)
         }
     }
 
