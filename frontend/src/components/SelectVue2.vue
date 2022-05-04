@@ -85,10 +85,10 @@
   </div>
 </template>
 <script>
-  import {AXIOS} from "./http-commons";
-  import {HotTable} from "@handsontable/vue";
+    import {AXIOS} from "./http-commons";
+    import {HotTable} from "@handsontable/vue";
 
-  const BASE_URL = "/mark/rest/v199";
+    const BASE_URL = "/mark/rest/v199";
 
 export default {
   name: "selectvue2",
@@ -288,6 +288,7 @@ export default {
         { row, prop, oldValue, newValue },
         { headers: header }
       )
+        // eslint-disable-next-line no-unused-vars
         .then(response => {
           self.$notify({
             group: "foo",
