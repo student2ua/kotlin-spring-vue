@@ -5,10 +5,10 @@ Vue.config.devtools = process.env.NODE_ENV === "development";
 Vue.use(Vuex);
 
 const state = {
-  token: localStorage.getItem("user-token") || "",
-  role: localStorage.getItem("user-role") || "",
-  username: localStorage.getItem("user-name") || "",
-  authorities: localStorage.getItem("authorities") || "",
+  token: sessionStorage.getItem("user-token") || "",
+  role: sessionStorage.getItem("user-role") || "",
+  username: sessionStorage.getItem("user-name") || "",
+  authorities: sessionStorage.getItem("authorities") || "",
   status: ""
 };
 
@@ -38,9 +38,9 @@ const getters = {
 
 const mutations = {
   auth_login: (state, user) => {
-    localStorage.setItem("user-token", user.token);
-    localStorage.setItem("user-name", user.name);
-    localStorage.setItem("user-authorities", user.roles);
+    sessionStorage.setItem("user-token", user.token);
+    sessionStorage.setItem("user-name", user.name);
+    sessionStorage.setItem("user-authorities", user.roles);
     state.token = user.token;
     state.username = user.username;
     state.authorities = user.roles;
@@ -54,11 +54,11 @@ const mutations = {
       }
     }
     if (isUser) {
-      localStorage.setItem("user-role", "user");
+      sessionStorage.setItem("user-role", "user");
       state.role = "user";
     }
     if (isAdmin) {
-      localStorage.setItem("user-role", "admin");
+      sessionStorage.setItem("user-role", "admin");
       state.role = "admin";
     }
   },
@@ -68,10 +68,10 @@ const mutations = {
     state.username = "";
     state.authorities = [];
     state.status = "";
-    localStorage.removeItem("user-token");
-    localStorage.removeItem("user-role");
-    localStorage.removeItem("user-name");
-    localStorage.removeItem("user-authorities");
+    sessionStorage.removeItem("user-token");
+    sessionStorage.removeItem("user-role");
+    sessionStorage.removeItem("user-name");
+    sessionStorage.removeItem("user-authorities");
   }
 };
 const actions = {
