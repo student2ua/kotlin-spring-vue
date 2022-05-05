@@ -38,15 +38,32 @@
 </template>
 
 <script>
-// import {AXIOS} from "./components/http-commons";
+    // import {AXIOS} from "./components/http-commons";
+    import Pusher from "pusher-js";
 
-export default {
+    export default {
   name: "app",
   methods: {
     logout() {
       this.$store.dispatch("logout");
       this.$router.push("/");
     }
+  },
+  created() {
+    const pusher = new Pusher(process.env.VUE_APP_PUSHER_APP_KEY, {
+      cluster: "eu",
+      encrypted: true
+    });
+    const channel = pusher.subscribe("mark");
+    channel.bind("new-event", newValue => {
+      this.$notify({
+        group: "foo",
+        type: "warn",
+        duration: -1,
+        title: "Warning " + new Date(),
+        text: newValue
+      });
+    });
   }
   /* see main js
  created: function () {
