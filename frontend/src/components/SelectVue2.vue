@@ -85,17 +85,17 @@
   </div>
 </template>
 <script>
-    import {AXIOS} from "./http-commons";
-    import {HotTable} from "@handsontable/vue";
+  import AXIOS from "./http-commons";
+  import {HotTable} from "@handsontable/vue";
 
-    const BASE_URL = "/mark/rest/v199";
+  const BASE_URL = "/mark/rest/v199";
 
 export default {
   name: "selectvue2",
   data() {
     return {
-      subjects: [],
       errors: [],
+      subjects: [],
       selectedSbj: null,
       lessonType: [],
       selectedLt: null,
@@ -106,8 +106,6 @@ export default {
       datasets: [
         ["", "Ford", "Volvo", "ToyotaNissan", "Honda"],
         ["2016", 10, 11, 12, 11],
-        ["2017", 20, 11, 15, 14.5],
-        ["2018", 40, 25, 12, 13],
         ["2019", 50, 22.01, 25, 15]
       ],
       hotSettingsVue: {
@@ -121,9 +119,6 @@ export default {
         ],
         data: [
           ["", "Ford", "Volvo", "ToyotaNissan", "Honda"],
-          ["2016", 10, 11, 12, 11],
-          ["2017", 20, 11, 15, 14.5],
-          ["2018", 40, 25, 12, 13],
           ["2019", 50, 22.01, 25, 15]
         ],
         autoColumnSize: { useHeaders: true },

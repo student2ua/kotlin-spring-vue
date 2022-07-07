@@ -61,10 +61,10 @@
 </template>
 
 <script>
-    // import {AUTH_REQUEST} from "../store/actions/auth";
-    import {AXIOS} from "./http-commons";
+  // import {AUTH_REQUEST} from "../store/actions/auth";
+  import AXIOS from "./http-commons";
 
-    export default {
+  export default {
   name: "SignIn",
   data() {
     return {
@@ -112,7 +112,7 @@
             console.log(error);
             if (error.response.status === 404)
               self.alertMessage =
-                "404 not found \n сервер не може знайти дані згідно з запитом";
+                "404 not found. Сервер не може знайти дані згідно з запитом";
             this.showAlert();
           }
         )
