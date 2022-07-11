@@ -128,6 +128,7 @@ export default {
         selectionMode: "single",
         stretchH: "all",
         // colHeaders:"true",
+        preventOverflow: 'horizontal',
         formulas: true,
         observeChanges: true,
         afterChange: changes => {
