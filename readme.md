@@ -1,3 +1,7 @@
+## Kotlin + Spring Boot + Vue.js
+- [backend](./backend/readme.md) Kotlin 1.2.71,  SpringBoot 2.1.3 , Spring v5.1.5
+- [frontend](./frontend/README.md) Vue 2
+
 ### for start
 `mvn --projects frontend clean install`
 
@@ -28,8 +32,10 @@
 - [Documenting a Spring REST API Using OpenAPI 3.0](https://www.baeldung.com/spring-rest-openapi-documentation)
 - [Spring Boot DataJpaTest модульный тест](https://coderoad.ru/53002232/Spring-Boot-DataJpaTest-%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9-%D1%82%D0%B5%D1%81%D1%82-%D0%B2%D0%BE%D0%B7%D0%B2%D1%80%D0%B0%D1%89%D0%B0%D0%B5%D1%82%D1%81%D1%8F-%D0%BA-H2-%D0%B2%D0%BC%D0%B5%D1%81%D1%82%D0%BE-mySql)
 - [need test!!! sessionStorage сохраняет данные входа](https://blog.csdn.net/maidu_xbd/article/details/104774454)
-- [SpringBootRefreshTokenJWT](https://github.com/Rapter1990/SpringBootRefreshTokenJWT)
-- [Testing examples](https://github.com/eugenp/tutorials/tree/master/spring-boot-modules/spring-boot-testing)
+
+
+- - [Все еще работаете с access token на клиенте? Тогда мы идем к вам](https://habr.com/ru/post/710552/) refresh token в cookie HttpOnly=true;Secure=true;SameSite=Strict;Path=/api/auth/ только с по аддресу продление токенов
+- - [ENSURING REST API COMPATIBILITY WITH SPRING CLOUD CONTRACT](https://rpestano.wordpress.com/2021/12/28/ensuring-rest-api-compatibility-with-spring-cloud-contract/)
 ---
 ### URL`s 
 - http://localhost:8080/api/persons

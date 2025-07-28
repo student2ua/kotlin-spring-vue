@@ -26,7 +26,8 @@ npm run lint
 ```
 
 ### Customize configuration
-[Configuration Reference](https://cli.vuejs.org/config/).
+- [Configuration Reference](https://cli.vuejs.org/config/)
+- [Сервис CLI](https://cli.vuejs.org/ru/guide/cli-service.html)
 
 ### all in one :)
 ```
@@ -36,7 +37,13 @@ npm install --save vue-router
 npm install --save axios
 npm install --save vuex
 npm install --save bootstrap bootstrap-vue
-```   
+```
+## doc link 
+- [package.json](https://docs.npmjs.com/cli/v10/configuring-npm/package-json)  В нём настроено подключение необходимых зависимостей для работы приложения. Также указаны скрипты запуска и сборки. И ещё дополнительная метаинформация для систем сборки frontend приложения. 
+- [browserslist](https://github.com/browserslist/browserslist)  Список поддерживаемых браузеров для улучшения сборки приложения
+- [vue.config.js](https://cli.vuejs.org/config/#vue-config-js)  Указываем всю основную конфигурацию нашего Vue приложения
+- [babel.config.js](https://babeljs.io/docs) хранит в себе конфигурацию babel (попросту говоря js компилятор)  
+- []()   
 ## Links
 - [Организация работы с API на Vue.js Slide](https://www.slideshare.net/MailRuGroup/api-vuejs-175897016)
 - [Организация работы с API на Vue.js Youtube](https://www.youtube.com/watch?v=42GnGAa3654)
@@ -45,18 +52,30 @@ npm install --save bootstrap bootstrap-vue
 - [управлять заголовками и мета-тегами в vuejs head, meta, title](https://qna.habr.com/q/490912)
 - [route-проверка входа](https://webdevblog.ru/ispolzovanie-middleware-vo-vue/)
 - [Toast bootstrap-vue](https://bootstrap-vue.org/docs/components/toast)
-- [handsontable 7.4.2](https://handsontable.com/docs/7.4.2/frameworks-wrapper-for-vue-vuex-example.html)
 - [A login page with vuex and vuetify](https://www.retinadata.com/blog/a-login-page-with-vuex-and-vuetify/)
+- [Accessing Vuex state when defining Vue-Router routes](https://stackoverflow.com/questions/42603909/accessing-vuex-state-when-defining-vue-router-routes)
+
 ### axios
 - [Используем axios вместе с Vue.js](https://medium.com/devschacht/используем-axios-вместе-с-vue-js-3bc45464c460)
 - [Axios interceptor to refresh JWT token after expiration](https://blog.liplex.de/axios-interceptor-to-refresh-jwt-token-after-expiration/)
 - [see interceptor](https://github.com/yangzongzhuan/RuoYi-Vue/blob/master/ruoyi-ui/src/utils/request.js)
 - [How can you use axios interceptors?](https://stackoverflow.com/questions/52737078/how-can-you-use-axios-interceptors)
+### handsontable
+ - [handsontable 7.4.2](https://handsontable.com/docs/7.4.2/frameworks-wrapper-for-vue-vuex-example.html)
+ - [handsontable: button in cell](https://jsfiddle.net/handsoncode/3Lfjxarp/)
+ - [adding/removing rows](https://jsfiddle.net/aszymanski/j3vamftq/17/)
+ - []()
 ## to do
 - [s1](https://github.com/rieckpil/testing-spring-boot-applications-masterclass/blob/master/src/frontend/public/index.html)
+- [error0308010](https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported)
+- [fingerprint](https://github.com/thunken/denizen.js)
+### blackList & LogOut
 - [Make Blacklist JWT tokens for spring boot](https://stackoverflow.com/questions/57674199/make-blacklist-jwt-tokens-for-spring-boot)
 - [Spring-boot JWT logout](https://stackoverflow.com/questions/34475946/spring-boot-jwt-logout)
-- [error0308010](https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported)
+### reporting Errors
+- [reporting-api](https://web.dev/reporting-api/)
+- [sentry.io](https://docs.sentry.io/platforms/javascript/guides/vue/)
+
 1. Try to uninstall Node.js version 17+ and reinstall the Node.js version 16+
 
 2. Open terminal and paste these as described :
@@ -69,7 +88,6 @@ Windows command prompt- `set NODE_OPTIONS=--openssl-legacy-provider`
 `npm install pusher-js`
 
 ### SSE
-
 - [Server-Sent Events: пример использования](https://habr.com/ru/post/519982/)
 - [vue-sse component](https://github.com/tserkov/vue-sse)
 
@@ -78,6 +96,7 @@ Windows command prompt- `set NODE_OPTIONS=--openssl-legacy-provider`
 - [Проектирование архитектуры хранилища Vuex для больших приложений на Vue.js](https://habr.com/ru/company/otus/blog/506754/)
 - [Улучшение производительности vue приложения](https://habr.com/ru/post/543298/)
 - [WebPack Code Splitting](https://webpack.js.org/guides/code-splitting/)
+
 #### headers
 - [securityheaders - mark](https://https://www.npmjs.com/package/http-vue-loader)
 - [HTTP-заголовки для ответственного разработчика](https://habr.com/ru/company/mailru/blog/450816/)
@@ -86,6 +105,7 @@ Windows command prompt- `set NODE_OPTIONS=--openssl-legacy-provider`
 - [HPKP: HTTP Public Key Pinning *Устарел*](https://scotthelme.co.uk/hpkp-http-public-key-pinning/)
 - [Как усилить защищенность веб-приложений при помощи HTTP заголовков](https://habr.com/ru/company/edison/blog/434228/)
 
+#### HSTS 
 `./letsencrypt-auto --hsts`
 
 ##### Strict-Transport-Security
@@ -105,6 +125,15 @@ Windows command prompt- `set NODE_OPTIONS=--openssl-legacy-provider`
 ##### Cache-Control
 `Cache-Control: max-age=30, public`  как долго ресурс должен считаться «свежим» и может отдавать из кэша браузера.
  **Immutable** — никогда не запрашивать ресурс дважды
- ##### Accept-Encoding
+##### Accept-Encoding
 ` Accept-Encoding: gzip, deflate, br `
 
+  package.json
+   ` "process.env.NODE_ENV === 'production' ? 'error' : 'off'", 
+    "no-console": "off",
+    "no-debugger": "off",`
+    
+    
+New major version of npm available! 8.5.0 -> 10.2.5
+Changelog: https://github.com/npm/cli/releases/tag/v10.2.5
+Run `npm install -g npm@10.2.5` to update!
