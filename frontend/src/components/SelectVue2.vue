@@ -103,28 +103,17 @@ export default {
       selectedPSG: null,
       loading: true,
 
-      datasets: [
-        ["", "Ford", "Volvo", "ToyotaNissan", "Honda"],
-        ["2016", 10, 11, 12, 11],
-        ["2019", 50, 22.01, 25, 15]
-      ],
+      datasets: [["", "", ""]],
       hotSettingsVue: {
-        nestedHeaders: [],
-        columns: [
-          { type: "text" },
-          { type: "numeric" },
-          { type: "numeric" },
-          { type: "numeric" },
-          { type: "numeric" }
+        nestedHeaders: [
+          ["Студент", { label: "Оцінки", colspan: 2 }],
+          ["Імя", "Кол-во пропусков", "Накопительный бал"],
         ],
-        data: [
-          ["", "Ford", "Volvo", "ToyotaNissan", "Honda"],
-          ["2019", 50, 22.01, 25, 15]
-        ],
+        columns: [{ type: "text" }, { type: "numeric" }, { type: "numeric" }],
         autoColumnSize: { useHeaders: true },
         fixedColumnsLeft: 1,
-        startRows: 5,
-        startCols: 5,
+        startRows: 1,
+        startCols: 3,
         selectionMode: "single",
         stretchH: "all",
         // colHeaders:"true",
