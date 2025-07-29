@@ -135,10 +135,8 @@ export default {
   },
   created() {
     let self = this;
-    const header = { Authorization: "Bearer " + this.$store.getters.getToken };
-
-    AXIOS.get(`${BASE_URL}/subjects`, { headers: header })
-      .then(function(response) {
+    MarkAPI.getSubjects(this.$store)
+      .then(function (response) {
         console.log(
           `GET: Here's the list of subjects`,
           JSON.stringify(response.data, null, "\t")
@@ -155,10 +153,8 @@ export default {
       console.log("handleChangeSbj" + e);
       let self = this;
       this.lessonType = [];
-      AXIOS.get(`${BASE_URL}/subjects/${e}/lessontypes`, {
-        headers: { Authorization: "Bearer " + this.$store.getters.getToken }
-      })
-        .then(function(response) {
+      MarkAPI.getLessonTypes(this.$store, e)
+        .then(function (response) {
           console.log(
             `GET: Here's the list of LessonType`,
             JSON.stringify(response.data, null, "\t")
@@ -174,11 +170,8 @@ export default {
       console.log("handleChangeLT " + e);
       let self = this;
       this.psgs = [];
-      AXIOS.get(
-        `${BASE_URL}/subjects/${self.selectedSbj}/lessontypes/${e}/psgs`,
-        { headers: { Authorization: "Bearer " + this.$store.getters.getToken } }
-      )
-        .then(function(response) {
+      MarkAPI.getPsgs(this.$store, self.selectedSbj, e)
+        .then(function (response) {
           console.log(
             `GET: Here's the list of PSG`,
             JSON.stringify(response.data, null, "\t")
@@ -204,15 +197,8 @@ export default {
       self2.dataTable = [];
       // self.$store.status = "loading";
       console.time("loadUserContent");
-      const header = {
-        Authorization: "Bearer " + this.$store.getters.getToken
-      };
-
-      AXIOS.get(
-        `/mark/rest/v199/subjects/${self2.selectedSbj}/lessontypes/${self2.selectedLt}/psgs/${e}/handsontable`,
-        { headers: header }
-      )
-        .then(response => {
+      MarkAPI.getTable(this.$store, self2.selectedSbj, self2.selectedLt, e)
+        .then((response) => {
           console.timeEnd("loadUserContent");
           self2.hotSettingsVue.nestedHeaders = response.data.nestedHeaders;
           self2.hotSettingsVue.columns = response.data.columns;
@@ -259,20 +245,22 @@ export default {
       let self = this;
       // self.$store.status = "loading";
       console.time("save Cell");
-      const header = {
-        Authorization: "Bearer " + this.$store.getters.getToken
+
+      const rowId = this.rows[row];
+      const propId = this.col.get(prop);
+
+      const payload = {
+        row: rowId,
+        prop: propId,
+        oldValue,
+        newValue,
       };
 
-      prop = self.col.get(prop);
-      row = self.rows[row];
-      const subjID = 9549;
-      const lt = 1;
-      const psgId = 42301;
-      AXIOS.post(
-        `/mark/rest/v199/subjects/${subjID}/lessontypes/${lt}/psgs/${psgId}/handsontable`,
-        { row, prop, oldValue, newValue },
-        { headers: header }
-      )
+      const subjID = this.selectedSbj;
+      const lt = this.selectedLt;
+      const psgId = this.selectedPSG;
+
+      MarkAPI.saveCell(this.$store, subjID, lt, psgId, payload)
         // eslint-disable-next-line no-unused-vars
         .then(response => {
           self.$notify({
