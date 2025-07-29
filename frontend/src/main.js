@@ -9,6 +9,8 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import Loading from "./components/lib/loading";
 // import VueNotification from "vue-notification";
 import Notifications from "vue-notification";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 Vue.config.productionTip = false;
 Vue.config.performance = true;
