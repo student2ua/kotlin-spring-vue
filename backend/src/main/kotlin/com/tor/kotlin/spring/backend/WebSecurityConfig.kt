@@ -65,7 +65,17 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override protected fun configure(http: HttpSecurity) {
-        http.csrf().disable().authorizeRequests()
+
+        http.headers()
+                .frameOptions().sameOrigin()
+//                .httpStrictTransportSecurity().includeSubDomains(true).maxAgeInSeconds(31536000).and()
+//                .xssProtection().block(false)
+
+//                .contentSecurityPolicy("script-src 'self'")
+                .contentSecurityPolicy("script-src 'self' 'unsafe-inline'")   //h2-console
+           //отключите подделку межсайтовых запросов, так как мы не используем файлы cookie - в противном случае ВСЕ PUT, POST, DELETE получат HTTP 403!‎
+        http.csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
