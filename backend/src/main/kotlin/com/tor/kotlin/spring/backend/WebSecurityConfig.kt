@@ -76,7 +76,9 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
            //отключите подделку межсайтовых запросов, так как мы не используем файлы cookie - в противном случае ВСЕ PUT, POST, DELETE получат HTTP 403!‎
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
+            .antMatchers("/api/auth/**").permitAll()
+            .antMatchers("/h2-console/**").permitAll()
+            .antMatchers( "/", "/index.html","/manifest.json","/favicon.ico", "/logo_logo.png","/logo_logo128.gif","/robots.txt", "/static/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

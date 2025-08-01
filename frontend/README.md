@@ -137,3 +137,16 @@ Windows command prompt- `set NODE_OPTIONS=--openssl-legacy-provider`
 New major version of npm available! 8.5.0 -> 10.2.5
 Changelog: https://github.com/npm/cli/releases/tag/v10.2.5
 Run `npm install -g npm@10.2.5` to update!
+
+используемый токен авторизации или сессии больше недействителен из-за истечения срока его действия или других причин, и может сопровождаться различными HTTP-кодами, включая 419 Session Timeout (нестандартный, но используемый для таких случаев), 401 Unauthorized (если токен отсутствует или недействителен), или 403 Forbidden. 
+
+используется copy-webpack-plugin@5.1.2, который работает со старым синтаксисом — без patterns
+```
+  plugins: [
+      new CopyWebpackPlugin([
+        { from: 'src/assets/img/logo_logo128.gif', to: 'logo_logo128.gif' },
+        { from: 'src/assets/img/logo_logo.png', to: 'logo_logo.png' }
+      ])
+    ],
+  },  
+```

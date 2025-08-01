@@ -1,3 +1,4 @@
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 // https://cli.vuejs.org/ru/config/
 module.exports = {
   outputDir: "target/dist",
@@ -15,7 +16,13 @@ module.exports = {
     },
   },
   configureWebpack: {
-    devtool: 'source-map'  // без eval
+    devtool: "source-map", // без eval
+    plugins: [
+      new CopyWebpackPlugin([
+        { from: 'src/assets/img/logo_logo128.gif', to: 'logo_logo128.gif' },
+        { from: 'src/assets/img/logo_logo.png', to: 'logo_logo.png' }
+      ])
+    ],
   },
   // proxy all webpack dev-server requests starting with /api
   // to our Spring Boot backend (localhost:8098) using http-proxy-middleware
