@@ -1,24 +1,24 @@
+# System
 .DS_Store
-node_modules
-/target
-/node
-/dist
 
-# local env files
-.env.local
-.env.*.local
-
-# Log files
+# Node & npm
+node_modules/
+target/
+dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
 
-# Editor directories and files
-.idea
-.vscode
+# Environment config
+.env.local
+.env.*.local
+
+# IDE & editor settings
+.idea/
+.vscode/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-

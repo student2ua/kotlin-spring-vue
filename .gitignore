@@ -1,13 +1,27 @@
-# Project exclude paths
+# Maven build
 /backend/target/
+
+# IntelliJ IDEA
 /.idea/
+*.iml
+
+# Logs & archives
 /*.gz
 /*.log
 /backend/*.log
 /backend/*.gz
-/backend/src/main/resources/public/static/css/
-/backend/src/main/resources/public/static/img/
-/backend/src/main/resources/public/static/js/
+/backend/logs/
+/logs/
+
+# Vue frontend build artifacts copied to backend
+/backend/src/main/resources/public/static/
+/backend/src/main/resources/public/*.js
+/backend/src/main/resources/public/*.css
+/backend/src/main/resources/public/*.map
+/backend/src/main/resources/public/logo_*.gif
+/backend/src/main/resources/public/logo_*.png
+
+# Local development artifacts
 /backend/data/*
 /data/*
 /doc/*
