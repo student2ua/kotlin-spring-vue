@@ -5,6 +5,8 @@ import com.tor.kotlin.spring.backend.jaas.JwtAuthTokenFilter
 import com.tor.kotlin.spring.backend.jaas.UserDetailsServiceImpl
 import com.tor.kotlin.spring.backend.repo.MarkRESTRepository
 import com.tor.kotlin.spring.backend.repo.MarkRESTRepositoryImpl
+import com.tor.kotlin.spring.backend.repo.SPRepository
+import com.tor.kotlin.spring.backend.repo.SPRepositoryImp
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -44,6 +46,11 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         return MarkRESTRepositoryImpl()
     }
 
+    @Bean
+    fun spRESTRepository(): SPRepository {
+        return SPRepositoryImp()
+    }
+
     /*  @Throws(Exception::class)
       override fun configure(authenticationManagerBuilder: AuthenticationManagerBuilder) {
           authenticationManagerBuilder
@@ -63,6 +70,27 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         return super.authenticationManagerBean()
     }
 
+    /* http.cors().and().csrf().disable()
+     .authorizeRequests()
+     .antMatchers("/auth/login", "/validate").permitAll()
+     .antMatchers("/admin/**").hasAuthority("ADMIN")
+
+     .anyRequest().authenticated()
+     .and()
+     .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+
+     .and()
+     .formLogin().permitAll()
+
+     .and()
+     .sessionManagement() .maximumSessions(1)
+     .and()
+     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+     .and()
+     .logout().logoutUrl("/logout").logoutSuccessUrl("/auth/login")
+     .deleteCookies("JSESSIONID");*/
+
+     */
     @Throws(Exception::class)
     override protected fun configure(http: HttpSecurity) {
 
@@ -71,18 +99,35 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 //                .httpStrictTransportSecurity().includeSubDomains(true).maxAgeInSeconds(31536000).and()
 //                .xssProtection().block(false)
 
-//                .contentSecurityPolicy("script-src 'self'")
-                .contentSecurityPolicy("script-src 'self' 'unsafe-inline'")   //h2-console
-           //отключите подделку межсайтовых запросов, так как мы не используем файлы cookie - в противном случае ВСЕ PUT, POST, DELETE получат HTTP 403!‎
+/*               .contentSecurityPolicy("script-src 'self'")
+        Это необходимо, чтобы h2-console работала корректно в iframe и могла исполнять inline-скрипты.
+        Но только в DEV профиле
+        if (env.activeProfiles.contains("dev")) http.headers().frameOptions().sameOrigin() */
+                .contentSecurityPolicy("script-src 'self' 'unsafe-inline'")
+
+        //отключите подделку межсайтовых запросов, так как мы не используем файлы cookie - в противном случае ВСЕ PUT, POST, DELETE получат HTTP 403!‎
         http.csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
-            .antMatchers("/api/auth/**").permitAll()
-            .antMatchers("/h2-console/**").permitAll()
-            .antMatchers( "/", "/index.html","/manifest.json","/favicon.ico", "/logo_logo.png","/logo_logo128.gif","/robots.txt", "/static/**").permitAll()
+                .antMatchers("/api/auth/**").permitAll()// доступ к API авторизации
+                .antMatchers("/h2-console/**").permitAll()
+
+                .antMatchers(
+
+                        "/",                  // корень SPA
+                        "/index.html",       // главный HTML
+                        "/favicon.ico",
+                        "/manifest.json",
+                        "/robots.txt",
+                        "/static/**",        // Vue-ресурсы
+                        "/logo_logo.png",    // ручная копия
+                        "/logo_logo128.gif", // ручная копия
+                        "/login"                     // важно: разрешить фронтовую страницу
+                ).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter::class.java)
     }

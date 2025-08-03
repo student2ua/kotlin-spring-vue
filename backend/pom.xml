@@ -155,15 +155,21 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>src/main/resources/public</outputDirectory>
+<!--                            <outputDirectory>src/main/resources/public</outputDirectory>-->
+                            <outputDirectory>${project.build.outputDirectory}/public</outputDirectory>
                             <overwrite>true</overwrite>
                             <resources>
                                 <resource>
                                     <directory>${project.parent.basedir}/frontend/target/dist</directory>
                                     <includes>
-                                        <include>static/</include>
+                                        <include>static/**</include>
+                                        <include>.well-known/**</include>
                                         <include>index.html</include>
                                         <include>favicon.ico</include>
+                                        <include>manifest.json</include>
+                                        <include>logo_logo.png</include>
+                                        <include>logo_logo128.gif</include>
+                                        <include>robots.txt</include>
                                     </includes>
                                 </resource>
                             </resources>
