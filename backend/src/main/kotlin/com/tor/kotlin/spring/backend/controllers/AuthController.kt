@@ -16,16 +16,19 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import java.util.*
 import java.util.stream.Collectors
 import javax.validation.Valid
 
-@CrossOrigin(origins = ["*"], maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 @Api(value = "/api/auth", description = "Rest API for authentication operations", tags = arrayOf("Auth API"))
@@ -45,27 +48,25 @@ class AuthController() {
     @ApiOperation(value = "authenticate", response = JwtResponse::class)
     @ApiResponses(value = arrayOf(
         ApiResponse(code = 200, message = "authenticate", response = JwtResponse::class),
-        ApiResponse(code = 400, message = "User not found")
+        ApiResponse(code = 401, message = "Неправильний логін або пароль")
     ))
     @PostMapping("/signin")
     fun authenticateUser(@Valid @RequestBody loginRequest: LoginUser): ResponseEntity<*> {
-        logger.debug(loginRequest.username + "/" + loginRequest.password)
-        val userCandidate: Optional<User> = userRepository.findByUsername(loginRequest.username!!)
-        if (userCandidate.isPresent) {
-            val user: User = userCandidate.get()
-            logger.debug("user" + user!!.toString())
-            val authentication = authenticationManager.authenticate(UsernamePasswordAuthenticationToken(loginRequest.username, loginRequest.password))
-            SecurityContextHolder.getContext().setAuthentication(authentication)
-            val jwt: String = jwtProvider.generateJwtToken(user.username!!)
-            logger.debug("jwt: " + jwt)
-            val authorities: List<GrantedAuthority> = user.roles!!
-                    .stream()
-                    .map({ role -> SimpleGrantedAuthority(role.name) })
-                    .collect(Collectors.toList<GrantedAuthority>())
-            logger.debug(authentication.authorities.toString())
-            return ResponseEntity.ok(JwtResponse(jwt, user.username, authorities))
-        } else {
-            return ResponseEntity(ResponseMessage("User not found!"), HttpStatus.BAD_REQUEST)
+        return try {
+            val authentication = authenticationManager.authenticate(
+                    UsernamePasswordAuthenticationToken(loginRequest.username, loginRequest.password)
+            )
+
+            SecurityContextHolder.getContext().authentication = authentication
+            val user = userRepository.findByUsername(loginRequest.username!!).get()
+            val jwt = jwtProvider.generateJwtToken(user.username!!)
+
+            val authorities = user.roles!!.map { SimpleGrantedAuthority(it.name) }
+            ResponseEntity.ok(JwtResponse(jwt, user.username, authorities))
+
+        } catch (ex: AuthenticationException) {
+            ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(ResponseMessage("Неправильний логін або пароль"))
         }
     }
 
