@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
+import springfox.documentation.annotations.ApiIgnore
 import javax.servlet.http.HttpServletRequest
 
 /**
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest
  * Time: 23:19
  * To change this template use File | Settings | File Templates.
  */
+@ApiIgnore
 @Controller
 class ErrorController : org.springframework.boot.web.servlet.error.ErrorController {
 

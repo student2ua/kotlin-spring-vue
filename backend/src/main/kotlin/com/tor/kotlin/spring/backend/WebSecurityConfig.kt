@@ -123,7 +123,14 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                         "/static/**",        // Vue-ресурсы
                         "/logo_logo.png",    // ручная копия
                         "/logo_logo128.gif", // ручная копия
-                        "/login"                     // важно: разрешить фронтовую страницу
+                        "/login" ,                    // важно: разрешить фронтовую страницу
+                        "/actuator/**",              //  разрешить Actuator
+                        "/swagger-ui.html",          //  Swagger UI
+                        "/swagger-ui/**",            // если SpringFox 3+
+                        "/v2/api-docs",              // если Swagger 2.x
+                        "/v3/api-docs/**",           // если OpenAPI 3
+                        "/swagger-resources/**",
+                        "/webjars/**"
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()
