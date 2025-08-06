@@ -1,0 +1,198 @@
+# @name=авторизируемся
+POST http://localhost:8080/openAPI/api/auth/signin  HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json, text/plain, */*
+
+{ "email" : "forTest" , "password" : "testpass" }
+
+
+> {%
+     client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+     client.test("Response content-type is json", function() {
+        var type = response.contentType.mimeType;
+        client.assert(type === "application/json", "Expected 'application/json' but received '" + type + "'");
+    });
+    client.global.set("auth_token", response.body.accessToken);
+   %}
+
+
+###
+# @name=получаем список предметов
+GET http://localhost:8080/openAPI/api/mark/rest/v199/subjects HTTP/1.1
+Authorization: Bearer {{auth_token}}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.test("Response content-type is json", function() {
+       var type = response.contentType.mimeType;
+      client.assert(type === "application/json", "Expected 'application/json' but received '" + type + "'");
+    });
+   // Извлечение значений 'first' и сохранение их в переменную
+    client.test("Response body is valid and contains data", function() {
+        // Логируем тело ответа для диагностики
+        client.log("Response body: " + response.body);
+        client.log("Response body type: " + typeof response.body);
+
+        // Проверяем, что тело ответа существует
+        client.assert(response.body, "Response body is empty or undefined");
+
+        // response.body уже является объектом (массивом), используем его напрямую
+        var jsonData = response.body;
+
+        // Проверяем, что jsonData - массив
+        client.assert(jsonData instanceof Array, "Response body is not an array");
+
+        // Извлекаем значения 'first'
+        var firstValues = jsonData.map(function(item) { return item.first; });
+        client.global.set("sid", JSON.stringify(firstValues[0]));
+        client.log("sid: " + client.global.get("sid"));
+
+        // Тестирование корректности извлечения
+        client.assert(firstValues.length > 0, "First values array is empty");
+        client.assert(JSON.stringify(firstValues) === JSON.stringify([3, 1, 2]), "First values do not match expected [3, 1, 2]");
+    });
+
+    %}
+
+###
+# @name=список типов
+GET http://localhost:8080/openAPI/api/mark/rest/v199/subjects/{{sid}}/lessontypes HTTP/1.1
+Authorization: Bearer {{auth_token}}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.test("Response content-type is json", function() {
+       var type = response.contentType.mimeType;
+      client.assert(type === "application/json", "Expected 'application/json' but received '" + type + "'");
+    });
+
+    client.test("Response body is valid and contains data", function() {
+        client.log("Response body: " + response.body);
+        client.log("Response body type: " + typeof response.body);
+
+        client.assert(response.body, "Response body is empty or undefined");
+
+        var jsonData = response.body;
+        client.assert(jsonData instanceof Array, "Response body is not an array");
+
+        var lessonTypeIds = jsonData.map(function(item) { return item.first; });
+        client.global.set("ltid", JSON.stringify(lessonTypeIds[1]));
+
+        client.assert(lessonTypeIds.length > 0, "Lesson type IDs array is empty");
+        client.assert(JSON.stringify(lessonTypeIds) === JSON.stringify([3, 2, 1]), "Lesson type IDs do not match expected [3, 2, 1]");
+    });
+
+    %}
+
+###  @name Planned groups
+GET http://localhost:8080/openAPI/api/mark/rest/v199/subjects/{{sid}}/lessontypes/{{ltid}}/psgs
+Authorization: Bearer {{auth_token}}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.test("Response content-type is json", function() {
+       var type = response.contentType.mimeType;
+      client.assert(type === "application/json", "Expected 'application/json' but received '" + type + "'");
+    });
+
+    client.test("Response body is valid and contains data", function() {
+        client.log("Response body: " + response.body);
+        client.log("Response body type: " + typeof response.body);
+
+        client.assert(response.body, "Response body is empty or undefined");
+
+        var jsonData = response.body;
+        client.assert(jsonData instanceof Array, "Response body is not an array");
+
+       var psgIds = jsonData.map(function(item) { return item.first; });
+        client.global.set("psgid", JSON.stringify(psgIds[1]));
+
+        client.assert(psgIds.length > 0, "Lesson type IDs array is empty");
+        client.assert(JSON.stringify(psgIds) === JSON.stringify([2, 4, 3, 1]), "Lesson type IDs do not match expected [3, 2, 1]");
+    });
+
+    %}
+
+###
+# @env dev
+# @name=handsontable
+GET {{baseUrl}}/api/mark/rest/v199/subjects/{{sid}}/lessontypes/{{ltid}}/psgs/{{psgid}}/handsontable
+Authorization: Bearer {{auth_token}}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+  // Проверка структуры ответа и извлечение данных
+    client.test("Response body is valid and contains required arrays", function() {
+        // Логируем тело ответа и его тип для диагностики
+        client.log("Response body: " + response.body);
+        client.log("Response body type: " + typeof response.body);
+
+        // Проверяем, что тело ответа существует и является объектом
+        client.assert(response.body, "Response body is empty or undefined");
+        client.assert(typeof response.body === "object" && response.body !== null, "Response body is not an object");
+
+        var jsonData = response.body;
+
+        // Проверка наличия и непустоты nestedHeaders
+        client.assert(jsonData.nestedHeaders instanceof Array, "nestedHeaders is not an array");
+        client.assert(jsonData.nestedHeaders.length > 0, "nestedHeaders array is empty");
+
+        // Проверка наличия и непустоты columns
+        client.assert(jsonData.columns instanceof Array, "columns is not an array");
+        client.assert(jsonData.columns.length > 0, "columns array is empty");
+
+        // Проверка наличия и непустоты tabledata
+        client.assert(jsonData.tabledata instanceof Array, "tabledata is not an array");
+        client.assert(jsonData.tabledata.length > 0, "tabledata array is empty");
+
+        // Проверка наличия и непустоты col
+        client.assert(jsonData.col && typeof jsonData.col === "object" && !Array.isArray(jsonData.col), "col is not an object");
+        client.assert(Object.keys(jsonData.col).length > 0, "col object is empty");
+
+        // Проверка наличия и непустоты rows
+        client.assert(jsonData.rows instanceof Array, "rows is not an array");
+        client.assert(jsonData.rows.length > 0, "rows array is empty");
+
+        // Additional check: col.length + 4 = tabledata[0].length
+        var colKeysLength = Object.keys(jsonData.col).length;
+        var tableDataFirstLength = Object.keys(jsonData.tabledata[0]).length;
+        client.assert(colKeysLength + 4 === tableDataFirstLength,
+            "col keys length (" + colKeysLength + ") + 4 does not equal tabledata[0] keys length (" + tableDataFirstLength + ")");
+
+        // Additional check: tabledata.length = rows.length
+        client.assert(jsonData.tabledata.length === jsonData.rows.length,
+            "tabledata length (" + jsonData.tabledata.length + ") does not equal rows length (" + jsonData.rows.length + ")");
+
+        // Извлечение studentNames из tabledata
+        var studentNames = jsonData.tabledata.map(function(item) { return item.A; });
+        // client.global.set("studentNames", JSON.stringify(studentNames));
+
+        // Тестирование корректности извлечения studentNames
+        client.assert(studentNames.length > 0, "Student names array is empty");
+        client.assert(studentNames.indexOf("Ли Джо́рдан") !== -1, "Expected student name 'Ли Джо́рдан' not found");
+        client.assert(studentNames.indexOf("Кэ́ти Белл") !== -1, "Expected student name 'Кэ́ти Белл' not found");
+
+        // Дополнительное сохранение rows (если нужно)
+        // client.global.set("rows", JSON.stringify(jsonData.rows));
+
+        // Логирование для диагностики
+        client.log("nestedHeaders[0]: " + JSON.stringify(jsonData.nestedHeaders[0]));
+        client.log("columns[0]: " + JSON.stringify(jsonData.columns[0]));
+        client.log("tabledata[0]: " + JSON.stringify(jsonData.tabledata[0]));
+        client.log("col: " + JSON.stringify(jsonData.col));
+        client.log("rows: " + JSON.stringify(jsonData.rows));
+        client.log("studentNames: " + JSON.stringify(studentNames));
+    });
+    %}
+
+###
